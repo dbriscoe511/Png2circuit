@@ -35,9 +35,12 @@ def slopeintercept(line):
     return [slope,intercept,dist]
 
 def combineparrellellines(l1,l2):
-    xpoints = l1[0,2] + l2[0,2]
-    ypoints = l1[1,3] + l2[1,3]
-    return [max(xpoints),max(ypoints),min(xpoints),min(ypoints)]
+    xpoints = [l1[0] ,l1[2] , l2[0] , l2[2]]
+    ypoints = [l1[1] ,l1[3] , l2[1] , l2[3]]
+    l3 =  [max(xpoints),max(ypoints),min(xpoints),min(ypoints)]
+    if slopeintercept(l3)[0]>0 and slopeintercept(l1)[0]<0:
+        l3 =  [max(xpoints),min(ypoints),min(xpoints),max(ypoints)]
+    return l3
 
 
 def randomcolor():
