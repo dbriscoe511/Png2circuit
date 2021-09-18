@@ -28,9 +28,17 @@ def slopeintercept(line):
     if line[2]-line[0] == 0:
         line[2] +=1
     slope = (line[3]-line[1])/(line[2]-line[0])
+    if slope == 0:
+        slope = 0.0000001
     intercept = line[1]-slope*line[0]
     dist = np.sqrt((line[3]-line[1])**2+(line[0]-line[2])**2)
     return [slope,intercept,dist]
+
+def combineparrellellines(l1,l2):
+    xpoints = l1[0,2] + l2[0,2]
+    ypoints = l1[1,3] + l2[1,3]
+    return [max(xpoints),max(ypoints),min(xpoints),min(ypoints)]
+
 
 def randomcolor():
     #makes a color beteween 50 and 200 rgb value for debugging 

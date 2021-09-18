@@ -37,14 +37,14 @@ class recognition():
         img = image.copy()
         if lines is not None:
             for line in lines:
-                cv2.line(img, (line[0], line[1]), (line[2], line[3]), (0,0,255), 1, cv2.LINE_AA)
+                cv2.line(img, (line[0], line[1]), (line[2], line[3]), ih.randomcolor(), 2, cv2.LINE_AA)
         return img
 
 
     def find_lines(self,comp_type):
         
         self.img_canny = cv2.Canny(self.img_bin,100,200)
-        self.lines = cv2.HoughLinesP(self.img_canny,1,np.pi / 180, 10, None, 5, 2) #TODO, change to canny
+        self.lines = cv2.HoughLinesP(self.img_canny,1,np.pi / 180, 3, None, 5, 2) #TODO, change to canny
 
         #flatten inner lists (default = [ [[points]],[[points]] ]...)
         self.lines = np.ndarray.tolist(self.lines)
@@ -58,24 +58,30 @@ class recognition():
         #remove duplicate parrellel lines. must have a slope and interccept within tol, and close by starting and ending points.
         temp_lines = self.lines.copy()
         temp_lines2 = self.lines.copy()
-        if temp_lines is not None:
-            for l1 in temp_lines:
-                for l2 in temp_lines:
+        if temp_lines2 is not None:
+            for l1 in temp_lines2:
+                for l2 in temp_lines2:
                     sl1 = ih.slopeintercept(l1)
                     sl2 = ih.slopeintercept(l2)
-                    if (abs(sl1[0]-sl2[0]) <= tol and abs(sl1[1]-sl2[1])):
-                        if l2 in temp_lines2:
+                    if (abs(1-sl1[0]/sl2[0]) <= tol/15 and abs(sl1[1]-sl2[1])<= tol):
+                        if l2 in temp_lines2 and l1 in temp_lines2:
+                            #shorter = l2 if sl1[2]>sl2[2] else l1
+                            #print(shorter)
+                            # temp_lines2.remove(shorter)
+                            temp_lines2.remove(l1)
                             temp_lines2.remove(l2)
-                        if (abs(l1[0]-l2[0]) <= tol*2 and abs(l1[1]-l2[1]) <= tol*2 and abs(l1[2]-l2[2]) <= tol*2 and abs(l1[3]-l2[3]) <= tol*2):
-                            #print("match found  " + str(len(temp_lines)))
-                            temp_lines.remove(l2) 
+                            temp_lines2.append(ih.combineparrellellines(l1,l2))
+                        # if (abs(l1[0]-l2[0]) <= tol*2 and abs(l1[1]-l2[1]) <= tol*2 and abs(l1[2]-l2[2]) <= tol*2 and abs(l1[3]-l2[3]) <= tol*2):
+                        #     #print("match found  " + str(len(temp_lines)))
+                        #     temp_lines.remove(l2) 
 
         self.lines = temp_lines
         self.lines_noparrellel = temp_lines2
         print(len(self.lines))
+        print(len(self.lines_noparrellel))
 
         #print(self.lines)
-        self.img_annotated = self.draw_lines(self.lines,self.img)
+        self.img_annotated = self.draw_lines(self.lines_noparrellel,self.img)
 
 
         # #finds component leads. This script makes me wish for death
