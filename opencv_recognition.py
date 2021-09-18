@@ -5,7 +5,7 @@ import img_helper as ih
 #img = cv2.imread('demos/VCO.png')
 #cv2.imshow('preview',img)
 #cv2.waitKey(0)
-
+'''
 def crop_resize(image,sizeratio,pixels):
     #gets a image to the correct aspect ratio and size without image distortion. white padding is used if needed, else the image is cropped
     im25 = int(image.shape[0]/(sizeratio*2))
@@ -32,7 +32,7 @@ def slopeintercept(line):
     return [slope,intercept]
 
 #print(slopeintercept([-5,10,-3,4]))  = (-3,-5)
-
+'''
 
 
 
@@ -100,8 +100,8 @@ class recognition():
         if temp_lines is not None:
             for l1 in temp_lines:
                 for l2 in temp_lines:
-                    sl1 = slopeintercept(l1)
-                    sl2 = slopeintercept(l2)
+                    sl1 = ih.slopeintercept(l1)
+                    sl2 = ih.slopeintercept(l2)
                     if (abs(sl1[0]-sl2[0]) <= tol and abs(sl1[1]-sl2[1])):
                         temp_lines2.remove(l2)
                         if (abs(l1[0]-l2[0]) <= tol*2 and abs(l1[1]-l2[1]) <= tol*2 and abs(l1[2]-l2[2]) <= tol*2 and abs(l1[3]-l2[3]) <= tol*2):
@@ -157,8 +157,8 @@ class recognition():
 
         if correct_size:
             if comp_type['style'] == 'two_port': #TODO, add more preset options for scaleing
-                self.img = crop_resize(self.img,0.5,500)
-                self.img_bin = crop_resize(self.img_bin,0.5,500)
+                self.img = ih.crop_resize(self.img,0.5,500)
+                self.img_bin = ih.crop_resize(self.img_bin,0.5,500)
 
         self.find_lines(comp_type)
 
