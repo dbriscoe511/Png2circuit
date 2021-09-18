@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 
+
 #img = cv2.imread('demos/VCO.png')
 #cv2.imshow('preview',img)
 #cv2.waitKey(0)
@@ -28,6 +29,11 @@ def slopeintercept(line):
         line[2] +=1
     slope = (line[3]-line[1])/(line[2]-line[0])
     intercept = line[1]-slope*line[0]
-    return [slope,intercept]
+    dist = np.sqrt((line[3]-line[1])**2+(line[0]-line[2])**2)
+    return [slope,intercept,dist]
+
+def randomcolor():
+    #makes a color beteween 50 and 150 rgb value for debugging 
+    return( np.random.randint(50,high=150),np.random.randint(50,high=150),np.random.randint(50,high=150))
 
 #print(slopeintercept([-5,10,-3,4]))  = (-3,-5)

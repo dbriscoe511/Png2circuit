@@ -5,36 +5,6 @@ import img_helper as ih
 #img = cv2.imread('demos/VCO.png')
 #cv2.imshow('preview',img)
 #cv2.waitKey(0)
-'''
-def crop_resize(image,sizeratio,pixels):
-    #gets a image to the correct aspect ratio and size without image distortion. white padding is used if needed, else the image is cropped
-    im25 = int(image.shape[0]/(sizeratio*2))
-    centered = int(image.shape[1]/2)
-    #print(centered, im25)
-    #self.img = self.img[:,0:im25*3]
-
-    #adds whitespace or crops image depending on size
-    if im25+centered < image.shape[0]:
-        image = image[:,int(centered-im25):int(im25+centered)]
-    else:
-        padding_needed = int(abs(im25+centered - image.shape[1]))
-        #print(padding_needed)
-        image = cv2.copyMakeBorder(image,0,0,padding_needed,padding_needed,cv2.BORDER_CONSTANT,value = [255,255,255] )
-
-    image = cv2.resize(image,(int(pixels/sizeratio),pixels), interpolation = cv2.INTER_AREA)
-    return image
-
-def slopeintercept(line): 
-    if line[2]-line[0] == 0:
-        line[2] +=1
-    slope = (line[3]-line[1])/(line[2]-line[0])
-    intercept = line[1]-slope*line[0]
-    return [slope,intercept]
-
-#print(slopeintercept([-5,10,-3,4]))  = (-3,-5)
-'''
-
-
 
 
 class recognition():
@@ -83,27 +53,19 @@ class recognition():
         self.image_t1 = self.draw_lines(self.lines,self.img)
         print(len(self.lines))
 
-        #remove duplicate parrellel lines 
+         
         tol = 3
-        #print(self.lines)
-        '''
-        temp_lines = self.lines
-        if temp_lines is not None:
-            for l1 in temp_lines:
-                for l2 in temp_lines:
-                    if (abs(l1[0]-l2[0]) <= tol and abs(l1[1]-l2[1]) <= tol and abs(l1[2]-l2[2]) <= tol and abs(l1[3]-l2[3]) <= tol):
-                        #print("match found  " + str(len(temp_lines)))
-                        temp_lines.remove(l2)'''
         #remove duplicate parrellel lines. must have a slope and interccept within tol, and close by starting and ending points.
-        temp_lines = self.lines
-        temp_lines2 = self.lines
+        temp_lines = self.lines.copy()
+        temp_lines2 = self.lines.copy()
         if temp_lines is not None:
             for l1 in temp_lines:
                 for l2 in temp_lines:
                     sl1 = ih.slopeintercept(l1)
                     sl2 = ih.slopeintercept(l2)
                     if (abs(sl1[0]-sl2[0]) <= tol and abs(sl1[1]-sl2[1])):
-                        temp_lines2.remove(l2)
+                        if l2 in temp_lines2:
+                            temp_lines2.remove(l2)
                         if (abs(l1[0]-l2[0]) <= tol*2 and abs(l1[1]-l2[1]) <= tol*2 and abs(l1[2]-l2[2]) <= tol*2 and abs(l1[3]-l2[3]) <= tol*2):
                             #print("match found  " + str(len(temp_lines)))
                             temp_lines.remove(l2) 
@@ -112,40 +74,39 @@ class recognition():
         self.lines_noparrellel = temp_lines2
         print(len(self.lines))
 
-        print(self.lines)
+        #print(self.lines)
         self.img_annotated = self.draw_lines(self.lines,self.img)
 
 
-        #finds component leads. This script makes me wish for death
-        temp_lines = self.lines
-        if comp_type['style'] == 'schematic':
-            for j in range(0,comp_type['n_leads']):
-                if temp_lines is not None:
-                    for i in range(0, len(temp_lines)):
+        # #finds component leads. This script makes me wish for death
+        
+        # temp_lines = self.lines
+        # if comp_type['style'] == 'schematic':
+        #     for j in range(0,comp_type['n_leads']):
+        #         if temp_lines is not None:
+        #             for i in range(0, len(temp_lines)):
 
-                        l = temp_lines[i][0]
-                        min_coord = ''
-                        min_line = ''
-                        max_line = ''
-                        max_coord = ''
+        #                 l = temp_lines[i][0]
+        #                 min_coord = ''
+        #                 min_line = ''
+        #                 max_line = ''
+        #                 max_coord = ''
 
-                        #special case for 1 or 2 leads: only look for leads on top and bottom
-                        if comp_type['n_leads'] <= 2:
-                            min_coord = min(l[1,3])
+        #                 #special case for 1 or 2 leads: only look for leads on top and bottom
+        #                 if comp_type['n_leads'] <= 2:
+        #                     min_coord = min(l[1,3])
 
-                        #TODO, only perform these steps if the pin is at a right angle?
-                        #tol = 5
-                        #if np.arctan()
+        #                 #TODO, only perform these steps if the pin is at a right angle?
+        #                 #tol = 5
+        #                 #if np.arctan()
 
-                        for n,coord in enumerate(l):
-                            #special case for 1 or 2 leads: only look for leads on top and bottom
-                            if comp_type['n_leads'] <= 2:
-                                if not n%2 == 0:
-                                    pass
-
-
-                            else:
-                                pass
+        #                 for n,coord in enumerate(l):
+        #                     #special case for 1 or 2 leads: only look for leads on top and bottom
+        #                     if comp_type['n_leads'] <= 2:
+        #                         if not n%2 == 0:
+        #                             pass
+        #                     else:
+        #                         pass
     
     def process_training_image(self,correct_rotation,correct_size,comp_type):
         self.prep_for_vision()
@@ -180,7 +141,7 @@ class recognition():
 
     
 
-a =recognition('demos/pi_filter.jpg')
+a =recognition('components/rs.png')
 #a.show_img()
 #a.prep_for_vision()
 a.process_training_image(True,True,{'style':'two_port'})
