@@ -33,7 +33,7 @@ def slopeintercept(line):
     return [slope,intercept,dist]
 
 def randomcolor():
-    #makes a color beteween 50 and 150 rgb value for debugging 
-    return( np.random.randint(50,high=150),np.random.randint(50,high=150),np.random.randint(50,high=150))
+    #makes a color beteween 50 and 200 rgb value for debugging 
+    return( np.random.randint(50,high=150),np.random.randint(50,high=150),np.random.randint(50,high=200))
 
 #print(slopeintercept([-5,10,-3,4]))  = (-3,-5)
