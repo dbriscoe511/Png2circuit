@@ -1,0 +1,247 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Device:R R?
+U 1 1 612EFDBB
+P 950 1000
+F 0 "R?" H 1020 1046 50  0000 L CNN
+F 1 "R" H 1020 955 50  0000 L CNN
+F 2 "" V 880 1000 50  0001 C CNN
+F 3 "~" H 950 1000 50  0001 C CNN
+	1    950  1000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 612F0014
+P 1350 1000
+F 0 "C?" H 1465 1046 50  0000 L CNN
+F 1 "C" H 1465 955 50  0000 L CNN
+F 2 "" H 1388 850 50  0001 C CNN
+F 3 "~" H 1350 1000 50  0001 C CNN
+	1    1350 1000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:CP C?
+U 1 1 612F046E
+P 1800 1000
+F 0 "C?" H 1918 1046 50  0000 L CNN
+F 1 "CP" H 1918 955 50  0000 L CNN
+F 2 "" H 1838 850 50  0001 C CNN
+F 3 "~" H 1800 1000 50  0001 C CNN
+	1    1800 1000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:L L?
+U 1 1 612F0578
+P 2150 1000
+F 0 "L?" H 2203 1046 50  0000 L CNN
+F 1 "L" H 2203 955 50  0000 L CNN
+F 2 "" H 2150 1000 50  0001 C CNN
+F 3 "~" H 2150 1000 50  0001 C CNN
+	1    2150 1000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:Ferrite_Bead FB?
+U 1 1 612F0997
+P 2550 1000
+F 0 "FB?" H 2687 1046 50  0000 L CNN
+F 1 "Ferrite_Bead" H 2687 955 50  0000 L CNN
+F 2 "" V 2480 1000 50  0001 C CNN
+F 3 "~" H 2550 1000 50  0001 C CNN
+	1    2550 1000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:LED D?
+U 1 1 612F1128
+P 3300 1000
+F 0 "D?" V 3247 1080 50  0000 L CNN
+F 1 "LED" V 3338 1080 50  0000 L CNN
+F 2 "" H 3300 1000 50  0001 C CNN
+F 3 "~" H 3300 1000 50  0001 C CNN
+	1    3300 1000
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:D D?
+U 1 1 612F1773
+P 3700 1000
+F 0 "D?" V 3654 1080 50  0000 L CNN
+F 1 "D" V 3745 1080 50  0000 L CNN
+F 2 "" H 3700 1000 50  0001 C CNN
+F 3 "~" H 3700 1000 50  0001 C CNN
+	1    3700 1000
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:D_Zener D?
+U 1 1 612F2208
+P 4000 1000
+F 0 "D?" V 3954 1080 50  0000 L CNN
+F 1 "D_Zener" V 4045 1080 50  0000 L CNN
+F 2 "" H 4000 1000 50  0001 C CNN
+F 3 "~" H 4000 1000 50  0001 C CNN
+	1    4000 1000
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:D_TVS D?
+U 1 1 612F25F9
+P 4450 1000
+F 0 "D?" V 4404 1080 50  0000 L CNN
+F 1 "D_TVS" V 4495 1080 50  0000 L CNN
+F 2 "" H 4450 1000 50  0001 C CNN
+F 3 "~" H 4450 1000 50  0001 C CNN
+	1    4450 1000
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:D_Schottky D?
+U 1 1 612F2AE6
+P 4850 1000
+F 0 "D?" V 4804 1080 50  0000 L CNN
+F 1 "D_Schottky" V 4895 1080 50  0000 L CNN
+F 2 "" H 4850 1000 50  0001 C CNN
+F 3 "~" H 4850 1000 50  0001 C CNN
+	1    4850 1000
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:Q_NPN_BCE Q?
+U 1 1 612F2E7E
+P 950 2550
+F 0 "Q?" H 1141 2596 50  0000 L CNN
+F 1 "Q_NPN_BCE" H 1141 2505 50  0000 L CNN
+F 2 "" H 1150 2650 50  0001 C CNN
+F 3 "~" H 950 2550 50  0001 C CNN
+	1    950  2550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:Q_PNP_BEC Q?
+U 1 1 612F3AAC
+P 1800 2550
+F 0 "Q?" H 1990 2504 50  0000 L CNN
+F 1 "Q_PNP_BEC" H 1990 2595 50  0000 L CNN
+F 2 "" H 2000 2650 50  0001 C CNN
+F 3 "~" H 1800 2550 50  0001 C CNN
+	1    1800 2550
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:Q_NMOS_DGS Q?
+U 1 1 612FA885
+P 2750 2550
+F 0 "Q?" H 2954 2596 50  0000 L CNN
+F 1 "Q_NMOS_DGS" H 2954 2505 50  0000 L CNN
+F 2 "" H 2950 2650 50  0001 C CNN
+F 3 "~" H 2750 2550 50  0001 C CNN
+	1    2750 2550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:Q_NMOS_GSD Q?
+U 1 1 612FB401
+P 3700 2550
+F 0 "Q?" H 3904 2596 50  0000 L CNN
+F 1 "Q_NMOS_GSD" H 3904 2505 50  0000 L CNN
+F 2 "" H 3900 2650 50  0001 C CNN
+F 3 "~" H 3700 2550 50  0001 C CNN
+	1    3700 2550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:Q_PMOS_DGS Q?
+U 1 1 612FC151
+P 4650 2550
+F 0 "Q?" H 4855 2596 50  0000 L CNN
+F 1 "Q_PMOS_DGS" H 4855 2505 50  0000 L CNN
+F 2 "" H 4850 2650 50  0001 C CNN
+F 3 "~" H 4650 2550 50  0001 C CNN
+	1    4650 2550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_US R?
+U 1 1 612FD045
+P 950 1500
+F 0 "R?" H 1018 1546 50  0000 L CNN
+F 1 "R_US" H 1018 1455 50  0000 L CNN
+F 2 "" V 990 1490 50  0001 C CNN
+F 3 "~" H 950 1500 50  0001 C CNN
+	1    950  1500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:CP1 C?
+U 1 1 612FE162
+P 1800 1500
+F 0 "C?" H 1915 1546 50  0000 L CNN
+F 1 "CP1" H 1915 1455 50  0000 L CNN
+F 2 "" H 1800 1500 50  0001 C CNN
+F 3 "~" H 1800 1500 50  0001 C CNN
+	1    1800 1500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Amplifier_Operational:LM358 U?
+U 1 1 61302F5D
+P 1300 3600
+F 0 "U?" H 1300 3967 50  0000 C CNN
+F 1 "LM358" H 1300 3876 50  0000 C CNN
+F 2 "" H 1300 3600 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/lm2904-n.pdf" H 1300 3600 50  0001 C CNN
+	1    1300 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Amplifier_Operational:LM358 U?
+U 2 1 61306DBE
+P 1300 4250
+F 0 "U?" H 1300 4617 50  0000 C CNN
+F 1 "LM358" H 1300 4526 50  0000 C CNN
+F 2 "" H 1300 4250 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/lm2904-n.pdf" H 1300 4250 50  0001 C CNN
+	2    1300 4250
+	1    0    0    -1  
+$EndComp
+$Comp
+L Amplifier_Operational:LM358 U?
+U 3 1 61308E44
+P 1200 4900
+F 0 "U?" H 1158 4946 50  0000 L CNN
+F 1 "LM358" H 1158 4855 50  0000 L CNN
+F 2 "" H 1200 4900 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/lm2904-n.pdf" H 1200 4900 50  0001 C CNN
+	3    1200 4900
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:Crystal Y?
+U 1 1 6130BB5C
+P 2550 1450
+F 0 "Y?" V 2596 1581 50  0000 L CNN
+F 1 "Crystal" V 2505 1581 50  0000 L CNN
+F 2 "" H 2550 1450 50  0001 C CNN
+F 3 "~" H 2550 1450 50  0001 C CNN
+	1    2550 1450
+	0    1    -1   0   
+$EndComp
+$EndSCHEMATC
