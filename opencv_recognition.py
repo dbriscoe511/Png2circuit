@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import img_helper as ih
 
 #img = cv2.imread('demos/VCO.png')
 #cv2.imshow('preview',img)
@@ -23,7 +24,7 @@ def crop_resize(image,sizeratio,pixels):
     image = cv2.resize(image,(int(pixels/sizeratio),pixels), interpolation = cv2.INTER_AREA)
     return image
 
-def slopeintercept(line):
+def slopeintercept(line): 
     if line[2]-line[0] == 0:
         line[2] +=1
     slope = (line[3]-line[1])/(line[2]-line[0])
@@ -44,6 +45,7 @@ class recognition():
     img_annotated = ''
     img_canny = ''
     lines =''
+    lines_noparrellel =''
     leads=''
     def __init__(self,img_path):
         self.img = cv2.imread(img_path)
@@ -68,22 +70,6 @@ class recognition():
                 cv2.line(img, (line[0], line[1]), (line[2], line[3]), (0,0,255), 1, cv2.LINE_AA)
         return img
 
-    def erode(self):
-        height,width = mask.shape
-        skel = np.zeros([height,width],dtype=np.uint8)      #[height,width,3]
-        kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (3,3))
-        temp_nonzero = np.count_nonzero(mask)
-        while(np.count_nonzero(mask) != 0 ):
-            eroded = cv2.erode(mask,kernel)
-            cv2.imshow("eroded",eroded)   
-            temp = cv2.dilate(eroded,kernel)
-            cv2.imshow("dilate",temp)
-            temp = cv2.subtract(mask,temp)
-            skel = cv2.bitwise_or(skel,temp)
-            mask = eroded.copy()
-        
-        cv2.imshow("skel",skel)
-        #cv2.waitKey(0)
 
     def find_lines(self,comp_type):
         
@@ -100,26 +86,30 @@ class recognition():
         #remove duplicate parrellel lines 
         tol = 3
         #print(self.lines)
+        '''
         temp_lines = self.lines
         if temp_lines is not None:
             for l1 in temp_lines:
                 for l2 in temp_lines:
                     if (abs(l1[0]-l2[0]) <= tol and abs(l1[1]-l2[1]) <= tol and abs(l1[2]-l2[2]) <= tol and abs(l1[3]-l2[3]) <= tol):
                         #print("match found  " + str(len(temp_lines)))
-                        temp_lines.remove(l2)
-        #remove duplicate parrellel lines. must have a slope and interccept within tol, and close by starting and ending points. 
+                        temp_lines.remove(l2)'''
+        #remove duplicate parrellel lines. must have a slope and interccept within tol, and close by starting and ending points.
         temp_lines = self.lines
+        temp_lines2 = self.lines
         if temp_lines is not None:
             for l1 in temp_lines:
                 for l2 in temp_lines:
                     sl1 = slopeintercept(l1)
                     sl2 = slopeintercept(l2)
                     if (abs(sl1[0]-sl2[0]) <= tol and abs(sl1[1]-sl2[1])):
+                        temp_lines2.remove(l2)
                         if (abs(l1[0]-l2[0]) <= tol*2 and abs(l1[1]-l2[1]) <= tol*2 and abs(l1[2]-l2[2]) <= tol*2 and abs(l1[3]-l2[3]) <= tol*2):
-                            print("match found  " + str(len(temp_lines)))
+                            #print("match found  " + str(len(temp_lines)))
                             temp_lines.remove(l2) 
 
         self.lines = temp_lines
+        self.lines_noparrellel = temp_lines2
         print(len(self.lines))
 
         print(self.lines)
