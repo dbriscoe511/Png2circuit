@@ -172,13 +172,6 @@ class recognition():
 
 
     
-a =recognition('components/rs.png')
-#a =recognition('components/L6726_buck.png')
-#a.show_img()
-#a.prep_for_vision()
-#a.process_training_image(True,True,{'style':'sch'})#TODO make a style format
-a.process_training_image(True,True,{'style':'two_port'})#TODO make a style format
 
-a.show_img()
 
 cv2.waitKey(0)
