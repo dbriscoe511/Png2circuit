@@ -59,12 +59,12 @@ def getintersect(l1,l2):
     x = det(d, xdiff) / div
     y = det(d, ydiff) / div
 
-    mind = 10000000000
     
     dist_tointersect = [np.sqrt((l1[0]-x)**2+(l1[1]-y)**2),np.sqrt((l1[2]-x)**2+(l1[3]-y)**2),np.sqrt((l2[0]-x)**2+(l2[1]-y)**2),np.sqrt((l2[2]-x)**2+(l2[3]-y)**2)]
+    dist_betweenlines = [np.sqrt((l1[0]-l2[0])**2+(l1[1]-l2[1])**2),np.sqrt((l1[2]-l2[2])**2+(l1[3]-l2[2])**2),np.sqrt((l2[0]-l1[2])**2+(l2[1]-l1[3])**2),np.sqrt((l2[1]-l1[3])**2+(l2[3]-l1[1])**2)]
     
 
-    return [(x,y),min(dist_tointersect)]
+    return [(x,y),min(dist_tointersect),min(dist_betweenlines)]
 
 def combineparrellellines(l1,l2):
     xpoints = [l1[0] ,l1[2] , l2[0] , l2[2]]

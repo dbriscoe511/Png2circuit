@@ -98,7 +98,7 @@ class recognition():
                             #dif = abs(1-sl1[0]/sl2[0])/slopediv + abs(sl1[1]-sl2[1])/(interdiv*abs(sl1[0]*sl2[0]))
                             #if abs(ih.getangle(l1,l2))
                             dif = abs(ih.getangle(l1,l2)*60)/slopediv + ih.getintersect(l1,l2)[1]/interdiv
-                            if mintol>dif:
+                            if mintol>dif and ih.getintersect(l1,l2)[2]<tol*5:
                                 mintol = dif
                                 #print(dif)
                                 minlines = [l1,l2]
