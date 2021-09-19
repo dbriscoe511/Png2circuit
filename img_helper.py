@@ -33,7 +33,8 @@ def slopeintercept(line):
     intercept = line[1]-slope*line[0]
     #dist = np.sqrt((line[3]-line[1])**2+(line[0]-line[2])**2)
     #angle = np.arctan(slope)
-    dist,angle = 0 #better performance, these are not used right now 
+    dist = 0 #better performance, these are not used right now 
+    angle = 0
     return [slope,intercept,dist,angle]
 
 def getangle(l1,l2):
