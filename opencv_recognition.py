@@ -96,7 +96,8 @@ class recognition():
                             sl1 = ih.slopeintercept(l1)
                             sl2 = ih.slopeintercept(l2)
                             #dif = abs(1-sl1[0]/sl2[0])/slopediv + abs(sl1[1]-sl2[1])/(interdiv*abs(sl1[0]*sl2[0]))
-                            dif = abs(sl1[3]-sl2[3])/slopediv + ih.getintersect(l1,l2)[1]/interdiv
+                            #if abs(ih.getangle(l1,l2))
+                            dif = abs(ih.getangle(l1,l2)*60)/slopediv + ih.getintersect(l1,l2)[1]/interdiv
                             if mintol>dif:
                                 mintol = dif
                                 #print(dif)
@@ -111,7 +112,7 @@ class recognition():
                     print('loop')
                     temp = self.draw_lines(self.lines[0:len(self.lines)-1],self.img,False)
                     temp = self.draw_lines([self.lines[len(self.lines)-1]],temp,True)
-                    cv2.imshow(str(i),temp)
+                    #cv2.imshow(str(i),temp)
                     #al.append(ih.combineparrellellines(minlines[0],minlines[1]))
             #print (al)
             #for line in al:

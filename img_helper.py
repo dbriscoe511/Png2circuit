@@ -35,6 +35,13 @@ def slopeintercept(line):
     angle = np.arctan(slope)
     return [slope,intercept,dist,angle]
 
+def getangle(l1,l2):
+    sl1 = slopeintercept(l1)
+    sl2 = slopeintercept(l2)
+
+    angle = np.arctan((sl1[0]-sl2[0])/(1+sl1[0]*sl2[0]))
+    return angle
+
 def getintersect(l1,l2):
     # sl1 = slopeintercept(l1)
     # sl2 = slopeintercept(l2)
@@ -54,10 +61,10 @@ def getintersect(l1,l2):
 
     mind = 10000000000
     
-    dist = [np.sqrt((l1[0]-x)**2+(l1[1]-y)**2),np.sqrt((l1[2]-x)**2+(l1[3]-y)**2),np.sqrt((l2[0]-x)**2+(l2[1]-y)**2),np.sqrt((l2[2]-x)**2+(l2[3]-y)**2)]
+    dist_tointersect = [np.sqrt((l1[0]-x)**2+(l1[1]-y)**2),np.sqrt((l1[2]-x)**2+(l1[3]-y)**2),np.sqrt((l2[0]-x)**2+(l2[1]-y)**2),np.sqrt((l2[2]-x)**2+(l2[3]-y)**2)]
     
 
-    return [(x,y),min(dist)]
+    return [(x,y),min(dist_tointersect)]
 
 def combineparrellellines(l1,l2):
     xpoints = [l1[0] ,l1[2] , l2[0] , l2[2]]
