@@ -53,7 +53,7 @@ class recognition():
         self.lines = np.ndarray.tolist(self.lines)
         self.lines = [i[0] for i in self.lines]
 
-        self.image_t1 = self.draw_lines(self.lines,self.img)
+        self.image_t1 = self.draw_lines(self.lines,self.img,False)
         print(len(self.lines))
 
          
@@ -109,9 +109,9 @@ class recognition():
                     self.lines.remove(minlines[1])
                     self.lines.append(ih.combineparrellellines(minlines[0],minlines[1]))
                     print('loop')
-                    temp = str(i),self.draw_lines(self.lines[0:len(self.lines)-1],self.img,False)
-                    temp = str(i),self.draw_lines(self.lines[len(self.lines)-1],self.img,True)
-                    cv2.imshow(str(i),self.draw_lines(self.lines,self.img))
+                    temp = self.draw_lines(self.lines[0:len(self.lines)-1],self.img,False)
+                    temp = self.draw_lines([self.lines[len(self.lines)-1]],temp,True)
+                    cv2.imshow(str(i),temp)
                     #al.append(ih.combineparrellellines(minlines[0],minlines[1]))
             #print (al)
             #for line in al:
