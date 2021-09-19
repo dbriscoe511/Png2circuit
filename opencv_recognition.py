@@ -21,7 +21,7 @@ class recognition():
         self.img = cv2.imread(img_path)
     def prep_for_vision(self):
         #self.img_annotated = self.img
-        self.img = cv2.medianBlur(self.img,3)
+        #self.img = cv2.medianBlur(self.img,3)
         self.img_bin = cv2.cvtColor(self.img,cv2.COLOR_BGR2GRAY)
         
         ret,self.img_bin = cv2.threshold(self.img_bin,200,255,cv2.THRESH_BINARY)
@@ -54,7 +54,7 @@ class recognition():
     def find_lines(self,comp_type):
         
         self.img_canny = cv2.Canny(self.img_bin,100,200)
-        self.lines = cv2.HoughLinesP(self.img_canny,1,np.pi / 180, 30, None, 5, 2) #TODO, change to canny
+        self.lines = cv2.HoughLinesP(self.img_canny,1,np.pi / 180, 10, None, 5, 2) #TODO, change to canny
 
         #flatten inner lists (default = [ [[points]],[[points]] ]...)
         self.lines = np.ndarray.tolist(self.lines)
@@ -173,10 +173,11 @@ class recognition():
 
     
 
-a =recognition('demos/tl594_pwm_cont.png')
+a =recognition('demos/L6726_buck.png')
 #a.show_img()
 #a.prep_for_vision()
-a.process_training_image(True,True,{'style':'two_port'})
+a.process_training_image(True,True,{'style':'sch'})#TODO make a style format
+
 a.show_img()
 
 cv2.waitKey(0)
