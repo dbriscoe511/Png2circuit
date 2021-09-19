@@ -47,7 +47,7 @@ class recognition():
     def find_lines(self,comp_type):
         
         self.img_canny = cv2.Canny(self.img_bin,100,200)
-        self.lines = cv2.HoughLinesP(self.img_canny,1,np.pi / 180, 30, None, 15, 2) #TODO, change to canny
+        self.lines = cv2.HoughLinesP(self.img_canny,1,np.pi / 180, 30, None, 5, 2) #TODO, change to canny
 
         #flatten inner lists (default = [ [[points]],[[points]] ]...)
         self.lines = np.ndarray.tolist(self.lines)
@@ -57,28 +57,7 @@ class recognition():
         print(len(self.lines))
 
          
-        tol = 1.5
-        #remove duplicate parrellel lines. must have a slope and interccept within tol, and close by starting and ending points.
-        # temp_lines = []
-        # temp_lines2 = self.lines.copy()
-        # if temp_lines2 is not None:
-        #     for l1 in temp_lines2:
-        #         for l2 in temp_lines2:
-        #             sl1 = ih.slopeintercept(l1)
-        #             sl2 = ih.slopeintercept(l2)
-        #             if (abs(1-sl1[0]/sl2[0]) <= tol/10 and abs(sl1[1]-sl2[1])<= tol):
-        #                 if l2 in temp_lines2 and l1 in temp_lines2 and not l1 ==l2:
-        #                     #shorter = l2 if sl1[2]>sl2[2] else l1
-        #                     #print(shorter)
-        #                     # temp_lines2.remove(shorter)
-        #                     #temp_lines2.remove(l1)
-        #                     #temp_lines2.remove(l2)
-        #                     l1 = [0,0,0,1]
-        #                     l2 = (ih.combineparrellellines(l1,l2))
-        #                     # temp_lines2.append(ih.combineparrellellines(l1,l2))
-        #                 # if (abs(l1[0]-l2[0]) <= tol*2 and abs(l1[1]-l2[1]) <= tol*2 and abs(l1[2]-l2[2]) <= tol*2 and abs(l1[3]-l2[3]) <= tol*2):
-        #                 #     #print("match found  " + str(len(temp_lines)))
-        #                 #     temp_lines.remove(l2) 
+        
         tol = 3
         slopediv = 1
         interdiv = 500
@@ -97,8 +76,8 @@ class recognition():
                             sl2 = ih.slopeintercept(l2)
                             #dif = abs(1-sl1[0]/sl2[0])/slopediv + abs(sl1[1]-sl2[1])/(interdiv*abs(sl1[0]*sl2[0]))
                             #if abs(ih.getangle(l1,l2))
-                            dif = abs(ih.getangle(l1,l2)*60)/slopediv + ih.getintersect(l1,l2)[1]/interdiv
-                            if mintol>dif and ih.getintersect(l1,l2)[2]<tol*5:
+                            dif = abs(ih.getangle(l1,l2)*60)/slopediv + ih.getintersect_dist(l1,l2)[1]/interdiv
+                            if mintol>dif and ih.getintersect_dist(l1,l2)[2]<tol*5:
                                 mintol = dif
                                 #print(dif)
                                 minlines = [l1,l2]
@@ -109,25 +88,12 @@ class recognition():
                     self.lines.remove(minlines[0])
                     self.lines.remove(minlines[1])
                     self.lines.append(ih.combineparrellellines(minlines[0],minlines[1]))
-                    print('loop')
                     temp = self.draw_lines(self.lines[0:len(self.lines)-1],self.img,False)
                     temp = self.draw_lines([self.lines[len(self.lines)-1]],temp,True)
-                    #cv2.imshow(str(i),temp)
-                    #al.append(ih.combineparrellellines(minlines[0],minlines[1]))
-            #print (al)
-            #for line in al:
-             #   self.lines.append(line)
-            print(self.lines)
-            #cv2.imshow(str(i),self.draw_lines(self.lines,self.img))
-
 
         
-        #self.lines = temp_lines
-        #self.lines_noparrellel = temp_lines2
         print(len(self.lines))
-        #print(len(self.lines_noparrellel))
 
-        #print(self.lines)
         self.img_annotated = self.draw_lines(self.lines,self.img,False)
 
 
@@ -194,7 +160,7 @@ class recognition():
 
     
 
-a =recognition('components/rs.png')
+a =recognition('demos/pi_filter.jpg')
 #a.show_img()
 #a.prep_for_vision()
 a.process_training_image(True,True,{'style':'two_port'})

@@ -42,10 +42,7 @@ def getangle(l1,l2):
     angle = np.arctan((sl1[0]-sl2[0])/(1+sl1[0]*sl2[0]))
     return angle
 
-def getintersect(l1,l2):
-    # sl1 = slopeintercept(l1)
-    # sl2 = slopeintercept(l2)
-    # inter = [(-1*l2[1]-)
+def getintersect_dist(l1,l2):
     xdiff = (l1[0]-l1[2],l2[0]-l2[2])
     ydiff = (l1[1]-l1[3],l2[1]-l2[3])
     def det(a, b):
@@ -66,7 +63,7 @@ def getintersect(l1,l2):
 
     return [(x,y),min(dist_tointersect),min(dist_betweenlines)]
 
-def combineparrellellines(l1,l2):
+def combineparrellellines(l1,l2): #this function assumes line are already ready to be combined (meaning parrellelity and distance have been checked)
     xpoints = [l1[0] ,l1[2] , l2[0] , l2[2]]
     ypoints = [l1[1] ,l1[3] , l2[1] , l2[3]]
     l3 =  [max(xpoints),max(ypoints),min(xpoints),min(ypoints)]
@@ -78,5 +75,3 @@ def combineparrellellines(l1,l2):
 def randomcolor():
     #makes a color beteween 50 and 200 rgb value for debugging 
     return( np.random.randint(50,high=150),np.random.randint(50,high=150),np.random.randint(50,high=200))
-
-#print(slopeintercept([-5,10,-3,4]))  = (-3,-5)
