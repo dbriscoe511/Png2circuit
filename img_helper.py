@@ -32,7 +32,25 @@ def slopeintercept(line):
         slope = 0.0000001
     intercept = line[1]-slope*line[0]
     dist = np.sqrt((line[3]-line[1])**2+(line[0]-line[2])**2)
-    return [slope,intercept,dist]
+    angle = np.arctan(slope)
+    return [slope,intercept,dist,angle]
+
+def getintersect(l1,l2):
+    # sl1 = slopeintercept(l1)
+    # sl2 = slopeintercept(l2)
+    # inter = [(-1*l2[1]-)
+    xdiff = (l1[0]-l1[2],l2[0]-l2[2])
+    ydiff = (l1[1]-l1[3],l2[1]-l2[3])
+    def det(a, b):
+        return a[0] * b[1] - a[1] * b[0]
+
+    div = det(xdiff, ydiff)
+    if div == 0:
+       return [(1000000,10000000),100000000000]
+
+    d = (det(l1[0:1],l1[2:3]), det(l2[0:1],l2[2:3]))
+    x = det(d, xdiff) / div
+    y = det(d, ydiff) / div
 
 def combineparrellellines(l1,l2):
     xpoints = [l1[0] ,l1[2] , l2[0] , l2[2]]
