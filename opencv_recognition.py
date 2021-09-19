@@ -88,8 +88,9 @@ class recognition():
                     self.lines.remove(minlines[0])
                     self.lines.remove(minlines[1])
                     self.lines.append(ih.combineparrellellines(minlines[0],minlines[1]))
-                    temp = self.draw_lines(self.lines[0:len(self.lines)-1],self.img,False)
-                    temp = self.draw_lines([self.lines[len(self.lines)-1]],temp,True)
+                    print(i)
+                    #temp = self.draw_lines(self.lines[0:len(self.lines)-1],self.img,False)
+                    #temp = self.draw_lines([self.lines[len(self.lines)-1]],temp,True)
 
         
         print(len(self.lines))
@@ -160,7 +161,7 @@ class recognition():
 
     
 
-a =recognition('demos/pi_filter.jpg')
+a =recognition('demos/tl594_pwm_cont.png')
 #a.show_img()
 #a.prep_for_vision()
 a.process_training_image(True,True,{'style':'two_port'})

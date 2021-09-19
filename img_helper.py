@@ -38,8 +38,11 @@ def slopeintercept(line):
 def getangle(l1,l2):
     sl1 = slopeintercept(l1)
     sl2 = slopeintercept(l2)
+    d = 1+sl1[0]*sl2[0]
+    if d <= 1e-8:
+        d = 1e-5
 
-    angle = np.arctan((sl1[0]-sl2[0])/(1+sl1[0]*sl2[0]))
+    angle = np.arctan((sl1[0]-sl2[0])/(d))
     return angle
 
 def getintersect_dist(l1,l2):
