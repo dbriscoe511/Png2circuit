@@ -15,7 +15,7 @@ class recognition():
     img_annotated = ''
     img_canny = ''
     lines =''
-    lines_noparrellel =''
+    lines_properties =''
     leads=''
     def __init__(self,img_path):
         self.img = cv2.imread(img_path)
@@ -43,6 +43,13 @@ class recognition():
                     cv2.line(img, (line[0], line[1]), (line[2], line[3]), (0,0,255), 2, cv2.LINE_AA)
         return img
 
+    def populate_line_properties(self,tol,slopediv,interdiv):
+        self.lines_properties = np.zeros(len(self.lines))
+
+        for i,line in enumerate(self.lines):
+            self.lines_properties[i] = [line,]
+
+
 
     def find_lines(self,comp_type):
         
@@ -62,6 +69,10 @@ class recognition():
         slopediv = 1
         interdiv = 500
 
+        slopediv_u = 60/slopediv
+        #create a list of lines and their properties. used in removing duplicates, bceause it is much fatser to not do the calculations each time
+        #self.populate_line_properites
+        #remove dupilcate parrellel lines 
         if self.lines is not None:
             change = True
             i = 0 
@@ -72,12 +83,13 @@ class recognition():
                 for l1 in self.lines:
                     for l2 in self.lines:
                         if not l1 == l2:
-                            sl1 = ih.slopeintercept(l1)
-                            sl2 = ih.slopeintercept(l2)
+                            #sl1 = ih.slopeintercept(l1)
+                            #sl2 = ih.slopeintercept(l2)
                             #dif = abs(1-sl1[0]/sl2[0])/slopediv + abs(sl1[1]-sl2[1])/(interdiv*abs(sl1[0]*sl2[0]))
                             #if abs(ih.getangle(l1,l2))
-                            dif = abs(ih.getangle(l1,l2)*60)/slopediv + ih.getintersect_dist(l1,l2)[1]/interdiv
-                            if mintol>dif and ih.getintersect_dist(l1,l2)[2]<tol*5:
+                            gid = ih.getintersect_dist(l1,l2)
+                            dif = abs(ih.getangle(l1,l2))*slopediv_u + gid[1]#/interdiv #not needed because this is stable at 1
+                            if mintol>dif and gid[2]<tol*5:
                                 mintol = dif
                                 #print(dif)
                                 minlines = [l1,l2]
