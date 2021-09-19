@@ -40,7 +40,7 @@ class recognition():
                 if randomcolor:
                     cv2.line(img, (line[0], line[1]), (line[2], line[3]), ih.randomcolor(), 2, cv2.LINE_AA)
                 else:
-                    cv2.line(img, (line[0], line[1]), (line[2], line[3]), (0,0,255), 2, cv2.LINE_AA)
+                    cv2.line(img, (line[0], line[1]), (line[2], line[3]), (0,0,255), 1, cv2.LINE_AA)
         return img
 
     def populate_line_properties(self,tol,slopediv,interdiv):
@@ -60,7 +60,7 @@ class recognition():
         self.lines = np.ndarray.tolist(self.lines)
         self.lines = [i[0] for i in self.lines]
 
-        self.image_t1 = self.draw_lines(self.lines,self.img,False)
+        self.image_t1 = self.draw_lines(self.lines,self.img,True)
         print(len(self.lines))
 
          
@@ -88,8 +88,8 @@ class recognition():
                             #dif = abs(1-sl1[0]/sl2[0])/slopediv + abs(sl1[1]-sl2[1])/(interdiv*abs(sl1[0]*sl2[0]))
                             #if abs(ih.getangle(l1,l2))
                             gid = ih.getintersect_dist(l1,l2)
-                            dif = abs(ih.getangle(l1,l2))*slopediv_u + gid[1]#/interdiv #not needed because this is stable at 1
-                            if mintol>dif and gid[2]<tol*5:
+                            dif = abs(ih.getangle(l1,l2))*slopediv_u + gid[1]/interdiv #not needed because this is stable at 1
+                            if mintol>dif and gid[2]<tol*1:
                                 mintol = dif
                                 #print(dif)
                                 minlines = [l1,l2]
@@ -107,7 +107,7 @@ class recognition():
         
         print(len(self.lines))
 
-        self.img_annotated = self.draw_lines(self.lines,self.img,False)
+        self.img_annotated = self.draw_lines(self.lines,self.img,True)
 
 
         # #finds component leads. This script makes me wish for death
@@ -150,8 +150,8 @@ class recognition():
 
         if correct_size:
             if comp_type['style'] == 'two_port': #TODO, add more preset options for scaleing
-                self.img = ih.crop_resize(self.img,0.5,500)
-                self.img_bin = ih.crop_resize(self.img_bin,0.5,500)
+                self.img = ih.crop_resize(self.img,0.5,100)
+                self.img_bin = ih.crop_resize(self.img_bin,0.5,100)
 
         self.find_lines(comp_type)
 
@@ -172,11 +172,12 @@ class recognition():
 
 
     
-
-a =recognition('demos/L6726_buck.png')
+a =recognition('components/rs.png')
+#a =recognition('components/L6726_buck.png')
 #a.show_img()
 #a.prep_for_vision()
-a.process_training_image(True,True,{'style':'sch'})#TODO make a style format
+#a.process_training_image(True,True,{'style':'sch'})#TODO make a style format
+a.process_training_image(True,True,{'style':'two_port'})#TODO make a style format
 
 a.show_img()
 
