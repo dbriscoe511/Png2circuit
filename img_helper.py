@@ -31,8 +31,9 @@ def slopeintercept(line):
     if slope == 0:
         slope = 0.0000001
     intercept = line[1]-slope*line[0]
-    dist = np.sqrt((line[3]-line[1])**2+(line[0]-line[2])**2)
-    angle = np.arctan(slope)
+    #dist = np.sqrt((line[3]-line[1])**2+(line[0]-line[2])**2)
+    #angle = np.arctan(slope)
+    dist,angle = 0 #better performance, these are not used right now 
     return [slope,intercept,dist,angle]
 
 def getangle(l1,l2):
@@ -54,12 +55,13 @@ def getintersect_dist(l1,l2):
     div = det(xdiff, ydiff)
     if div == 0:
        return [(1000000,10000000),100000000000]
+    div = 1/div
 
     d = (det(l1[0:2],l1[2:4]), det(l2[0:2],l2[2:4]))
-    x = det(d, xdiff) / div
-    y = det(d, ydiff) / div
+    x = det(d, xdiff) * div
+    y = det(d, ydiff) * div
 
-    
+    #TODO these may cause inefficiency
     dist_tointersect = [np.sqrt((l1[0]-x)**2+(l1[1]-y)**2),np.sqrt((l1[2]-x)**2+(l1[3]-y)**2),np.sqrt((l2[0]-x)**2+(l2[1]-y)**2),np.sqrt((l2[2]-x)**2+(l2[3]-y)**2)]
     dist_betweenlines = [np.sqrt((l1[0]-l2[0])**2+(l1[1]-l2[1])**2),np.sqrt((l1[2]-l2[2])**2+(l1[3]-l2[2])**2),np.sqrt((l2[0]-l1[2])**2+(l2[1]-l1[3])**2),np.sqrt((l2[1]-l1[3])**2+(l2[3]-l1[1])**2)]
     
