@@ -33,18 +33,21 @@ class recognition():
         cv2.imshow('PRE LINE DEL',self.image_t1)
         cv2.imshow('canny',self.img_canny)
 
-    def draw_lines(self,lines,image):
+    def draw_lines(self,lines,image,randomcolor):
         img = image.copy()
         if lines is not None:
             for line in lines:
-                cv2.line(img, (line[0], line[1]), (line[2], line[3]), ih.randomcolor(), 2, cv2.LINE_AA)
+                if randomcolor:
+                    cv2.line(img, (line[0], line[1]), (line[2], line[3]), ih.randomcolor(), 2, cv2.LINE_AA)
+                else:
+                    cv2.line(img, (line[0], line[1]), (line[2], line[3]), (0,0,255), 2, cv2.LINE_AA)
         return img
 
 
     def find_lines(self,comp_type):
         
         self.img_canny = cv2.Canny(self.img_bin,100,200)
-        self.lines = cv2.HoughLinesP(self.img_canny,1,np.pi / 180, 5, None, 15, 2) #TODO, change to canny
+        self.lines = cv2.HoughLinesP(self.img_canny,1,np.pi / 180, 30, None, 15, 2) #TODO, change to canny
 
         #flatten inner lists (default = [ [[points]],[[points]] ]...)
         self.lines = np.ndarray.tolist(self.lines)
@@ -78,10 +81,11 @@ class recognition():
         #                 #     temp_lines.remove(l2) 
         tol = 3
         slopediv = 1
-        interdiv = 1
+        interdiv = 500
 
         if self.lines is not None:
             change = True
+            i = 0 
             al = []
             while change:
                 mintol = tol*5
@@ -92,21 +96,28 @@ class recognition():
                             sl1 = ih.slopeintercept(l1)
                             sl2 = ih.slopeintercept(l2)
                             #dif = abs(1-sl1[0]/sl2[0])/slopediv + abs(sl1[1]-sl2[1])/(interdiv*abs(sl1[0]*sl2[0]))
-                            dif = abs(sl1[3]-sl2[3])/slopediv + abs(sl1[1]-sl2[1])/(np.sqrt(sl1[3]))
+                            dif = abs(sl1[3]-sl2[3])/slopediv + ih.getintersect(l1,l2)[1]/interdiv
                             if mintol>dif:
                                 mintol = dif
                                 #print(dif)
                                 minlines = [l1,l2]
 
                 change = mintol<tol
+                i +=1
                 if change:
                     self.lines.remove(minlines[0])
                     self.lines.remove(minlines[1])
-                    al.append(ih.combineparrellellines(minlines[0],minlines[1]))
+                    self.lines.append(ih.combineparrellellines(minlines[0],minlines[1]))
+                    print('loop')
+                    temp = str(i),self.draw_lines(self.lines[0:len(self.lines)-1],self.img,False)
+                    temp = str(i),self.draw_lines(self.lines[len(self.lines)-1],self.img,True)
+                    cv2.imshow(str(i),self.draw_lines(self.lines,self.img))
+                    #al.append(ih.combineparrellellines(minlines[0],minlines[1]))
             #print (al)
-            for line in al:
-                self.lines.append(line)
+            #for line in al:
+             #   self.lines.append(line)
             print(self.lines)
+            #cv2.imshow(str(i),self.draw_lines(self.lines,self.img))
 
 
         
@@ -116,7 +127,7 @@ class recognition():
         #print(len(self.lines_noparrellel))
 
         #print(self.lines)
-        self.img_annotated = self.draw_lines(self.lines,self.img)
+        self.img_annotated = self.draw_lines(self.lines,self.img,False)
 
 
         # #finds component leads. This script makes me wish for death
