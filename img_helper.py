@@ -52,6 +52,9 @@ def getintersect(l1,l2):
     x = det(d, xdiff) / div
     y = det(d, ydiff) / div
 
+    dist = np.sqrt((l1[0]-x)**2+(l1[1]-y)**2)
+    return []
+
 def combineparrellellines(l1,l2):
     xpoints = [l1[0] ,l1[2] , l2[0] , l2[2]]
     ypoints = [l1[1] ,l1[3] , l2[1] , l2[3]]
