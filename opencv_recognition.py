@@ -140,7 +140,7 @@ class recognition():
         #                     else:
         #                         pass
     
-    def process_training_image(self,correct_rotation,correct_size,comp_type):
+    def process_training_image(self,correct_rotation,correct_size,find_lines,comp_type):
         self.prep_for_vision()
 
         if correct_rotation:
@@ -153,7 +153,8 @@ class recognition():
                 self.img = ih.crop_resize(self.img,0.5,100)
                 self.img_bin = ih.crop_resize(self.img_bin,0.5,100)
 
-        self.find_lines(comp_type)
+        if find_lines:
+            self.find_lines(comp_type)
 
 
 
