@@ -86,10 +86,6 @@ class recognition():
                 for l1 in self.lines:
                     for l2 in self.lines:
                         if not l1 == l2:
-                            #sl1 = ih.slopeintercept(l1)
-                            #sl2 = ih.slopeintercept(l2)
-                            #dif = abs(1-sl1[0]/sl2[0])/slopediv + abs(sl1[1]-sl2[1])/(interdiv*abs(sl1[0]*sl2[0]))
-                            #if abs(ih.getangle(l1,l2))
                             gid = ih.getintersect_dist(l1,l2)
                             dif = abs(ih.getangle(l1,l2))*slopediv_u + gid[1]/interdiv #not needed because this is stable at 1
                             if mintol>dif and gid[2]<tol*1:
@@ -104,45 +100,12 @@ class recognition():
                     self.lines.remove(minlines[1])
                     self.lines.append(ih.combineparrellellines(minlines[0],minlines[1]))
                     print(i)
-                    #temp = self.draw_lines(self.lines[0:len(self.lines)-1],self.img,False)
-                    #temp = self.draw_lines([self.lines[len(self.lines)-1]],temp,True)
 
         
         print(len(self.lines))
 
         self.img_annotated = self.draw_lines(self.lines,self.img,True)
 
-
-        # #finds component leads. This script makes me wish for death
-        
-        # temp_lines = self.lines
-        # if comp_type['style'] == 'schematic':
-        #     for j in range(0,comp_type['n_leads']):
-        #         if temp_lines is not None:
-        #             for i in range(0, len(temp_lines)):
-
-        #                 l = temp_lines[i][0]
-        #                 min_coord = ''
-        #                 min_line = ''
-        #                 max_line = ''
-        #                 max_coord = ''
-
-        #                 #special case for 1 or 2 leads: only look for leads on top and bottom
-        #                 if comp_type['n_leads'] <= 2:
-        #                     min_coord = min(l[1,3])
-
-        #                 #TODO, only perform these steps if the pin is at a right angle?
-        #                 #tol = 5
-        #                 #if np.arctan()
-
-        #                 for n,coord in enumerate(l):
-        #                     #special case for 1 or 2 leads: only look for leads on top and bottom
-        #                     if comp_type['n_leads'] <= 2:
-        #                         if not n%2 == 0:
-        #                             pass
-        #                     else:
-        #                         pass
-    
     def process_training_image(self,correct_rotation,correct_size,find_lines,comp_type):
         self.prep_for_vision()
 
