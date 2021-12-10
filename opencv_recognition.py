@@ -29,9 +29,12 @@ class recognition():
     def show_img(self):
         cv2.imshow('preview',self.img)
         cv2.imshow('bin',self.img_bin)
-        cv2.imshow('annotated',self.img_annotated)
-        cv2.imshow('PRE LINE DEL',self.image_t1)
-        cv2.imshow('canny',self.img_canny)
+        try:
+            cv2.imshow('annotated',self.img_annotated)
+            cv2.imshow('PRE LINE DEL',self.image_t1)
+            cv2.imshow('canny',self.img_canny)
+        except:
+            print('lines undrawn')
 
     def draw_lines(self,lines,image,randomcolor):
         img = image.copy()
