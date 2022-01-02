@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import img_helper as ih
+import pytesseract
 
 #img = cv2.imread('demos/VCO.png')
 #cv2.imshow('preview',img)
